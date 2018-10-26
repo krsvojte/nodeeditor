@@ -214,9 +214,15 @@ mousePressEvent(QGraphicsSceneMouseEvent * event)
       std::unordered_map<QUuid, Connection*> connections =
           nodeState.connections(portToCheck, portIndex);
 
+
+	  const auto policy = _node.nodeDataModel()->portConnectionPolicy(portToCheck, portIndex);
+
       // start dragging existing connection
       if (!connections.empty() && portToCheck == PortType::In)
       {
+
+		
+
         auto con = connections.begin()->second;
 
         NodeConnectionInteraction interaction(_node, *con, _scene);
@@ -227,9 +233,8 @@ mousePressEvent(QGraphicsSceneMouseEvent * event)
       {
         if (portToCheck == PortType::Out)
         {
-          const auto outPolicy = _node.nodeDataModel()->portOutConnectionPolicy(portIndex);
-          if (!connections.empty() &&
-              outPolicy == NodeDataModel::ConnectionPolicy::One)
+          
+          if (!connections.empty() && policy == NodeDataModel::ConnectionPolicy::One)
           {
             _scene.deleteConnection( *connections.begin()->second );
           }

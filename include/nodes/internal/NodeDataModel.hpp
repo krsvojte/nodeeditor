@@ -80,9 +80,13 @@ public:
 
   virtual
   ConnectionPolicy
-  portOutConnectionPolicy(PortIndex) const
+  portOutConnectionPolicy(PortIndex index) const
   {
-    return ConnectionPolicy::Many;
+	  return portConnectionPolicy(PortType::Out, index);  
+  }
+
+  virtual ConnectionPolicy portConnectionPolicy(PortType, PortIndex) const {
+	  return ConnectionPolicy::Many;
   }
 
   NodeStyle const&
